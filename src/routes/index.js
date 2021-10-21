@@ -26,7 +26,13 @@ export default function Routes({
 }
 
 Routes.propTypes = {
-  player: PropTypes.arrayOf(PropTypes.object).isRequired,
+  player: PropTypes.shape({
+    name: PropTypes.string,
+    firebaseKey: PropTypes.string,
+    imageUrl: PropTypes.string,
+    position: PropTypes.string,
+    uid: PropTypes.string,
+  }).isRequired,
   team: PropTypes.arrayOf(PropTypes.object).isRequired,
   setPlayer: PropTypes.func.isRequired,
   setTeam: PropTypes.func.isRequired,
