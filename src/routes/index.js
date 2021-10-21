@@ -5,7 +5,7 @@ import Team from '../views/Team';
 import NewPlayer from '../views/NewPlayer';
 
 export default function Routes({
-  player, setPlayer, team, setTeam,
+  user, player, setPlayer, team, setTeam,
 }) {
   return (
     <div>
@@ -18,7 +18,9 @@ export default function Routes({
         <Route
           exact
           path="/player"
-          component={() => <NewPlayer player={player} setPlayer={setPlayer} />}
+          component={() => (
+            <NewPlayer user={user} player={player} setPlayer={setPlayer} />
+          )}
         />
       </Switch>
     </div>
@@ -26,6 +28,7 @@ export default function Routes({
 }
 
 Routes.propTypes = {
+  user: PropTypes.arrayOf(PropTypes.object).isRequired,
   player: PropTypes.arrayOf(PropTypes.object).isRequired,
   team: PropTypes.arrayOf(PropTypes.object).isRequired,
   setPlayer: PropTypes.func.isRequired,
