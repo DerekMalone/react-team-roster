@@ -34,7 +34,6 @@ function Initialize() {
             <Navigation />
 
             <Routes
-              user={user}
               player={player}
               setPlayer={setPlayer}
               team={team}
