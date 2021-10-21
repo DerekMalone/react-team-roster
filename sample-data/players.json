@@ -1,0 +1,23 @@
+{
+    "player 1": {
+        "name": "John",
+        "firebaseKey": "",
+        "imageUrl": "",
+        "position": "Midfield",
+        "uid": ""
+    },
+    "player 2": {
+        "name": "Steve",
+        "firebaseKey": "",
+        "imageUrl": "",
+        "position": "Defender",
+        "uid": ""
+    },
+    "player 3": {
+        "name": "Daryl",
+        "firebaseKey": "",
+        "imageUrl": "",
+        "position": "Attack",
+        "uid": ""
+    }
+}
