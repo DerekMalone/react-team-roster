@@ -7,7 +7,7 @@ const initialState = {
   position: '',
 };
 
-export default function NewPlayerForm({ user, player, setPlayer }) {
+export default function NewPlayerForm({ player, setPlayer }) {
   const [formInput, setFormInput] = useState(initialState);
 
   const handleChange = (e) => {
@@ -19,16 +19,16 @@ export default function NewPlayerForm({ user, player, setPlayer }) {
   };
 
   useEffect(() => {
-    if (player.firebaseKey) {
-      setFormInput({
-        name: player.name,
-        firebaseKey: player.firebaseKey,
-        imageUrl: player.imageUrl,
-        position: player.position,
-        uid: [...user].uid,
-      });
-    }
-  }, [player]);
+    // if (obj.firebaseKey) {
+    setFormInput({
+      name: player.name,
+      firebaseKey: player.firebaseKey,
+      imageUrl: player.imageUrl,
+      position: player.position,
+      // uid: [...user].uid,
+    });
+    // }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,7 +47,26 @@ export default function NewPlayerForm({ user, player, setPlayer }) {
             placeholder="Player Name"
             required
           />
+          <input
+            imageUrl="imageUrl"
+            id="imageUrl"
+            value={formInput.imageUrl}
+            onChange={handleChange}
+            placeholder="Image"
+            required
+          />
+          <input
+            position="position"
+            id="position"
+            value={formInput.position}
+            onChange={handleChange}
+            placeholder="Position"
+            required
+          />
         </label>
+        <button type="submit" className="btn btn-success">
+          Submit
+        </button>
       </form>
     </>
   );
