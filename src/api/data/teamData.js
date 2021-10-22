@@ -10,4 +10,27 @@ const getAllPlayers = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export default getAllPlayers;
+const createPlayer = (obj) => new Promise((resolve, reject) => {
+  axios
+    .post(`${dbUrl}/players.json`, obj)
+    .then((response) => {
+      const firebaseKey = response.data.name;
+      axios
+        .patch(`${dbUrl}/players/${firebaseKey}.json`, { firebaseKey })
+        .then(() => {
+          getAllPlayers().then(resolve);
+        });
+    })
+    .catch(reject);
+});
+
+const updatePlayer = (playerObj) => new Promise((resolve, reject) => {
+  axios
+    .patch(`${dbUrl}/players/${playerObj.firebaseKey}`, playerObj)
+    .then(() => {
+      getAllPlayers().then(resolve);
+    })
+    .catch(reject);
+});
+
+export { getAllPlayers, createPlayer, updatePlayer };

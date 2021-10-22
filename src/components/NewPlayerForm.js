@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { createPlayer, updatePlayer } from '../api/data/teamData';
 
 const initialState = {
   name: '',
+  playerNumber: 0,
   imageUrl: '',
   position: '',
+  uid: '',
 };
 
-export default function NewPlayerForm({ user, player, setPlayer }) {
+export default function NewPlayerForm({
+  user, player, setPlayer, setTeam,
+}) {
   const [formInput, setFormInput] = useState(initialState);
 
   const handleChange = (e) => {
@@ -18,21 +23,52 @@ export default function NewPlayerForm({ user, player, setPlayer }) {
     }));
   };
 
+  // const handleNumberChange = (e) => {
+  //   const { number, value } = e.target;
+  //   setFormInput((prevState) => ({
+  //     ...prevState,
+  //     [number]: Number(value),
+  //   }));
+  // };
+
   useEffect(() => {
+    let isMounted = true;
+
     if (player.firebaseKey) {
-      setFormInput({
-        name: player.name,
-        firebaseKey: player.firebaseKey,
-        imageUrl: player.imageUrl,
-        position: player.position,
-        uid: [...user].uid,
-      });
+      if (isMounted) {
+        setFormInput({
+          name: player.name,
+          firebaseKey: player.firebaseKey,
+          imageUrl: player.imageUrl,
+          position: player.position,
+          playerNumber: player.playerNumber,
+          uid: user.uid,
+        });
+      }
     }
+    return () => {
+      isMounted = false;
+    };
   }, [player]);
+
+  const resetForm = () => {
+    setFormInput({ ...initialState });
+    setPlayer({});
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setPlayer();
+    if (player.firebaseKey) {
+      updatePlayer(formInput).then((team) => {
+        setTeam(team);
+        resetForm();
+      });
+    } else {
+      createPlayer({ ...formInput }).then((team) => {
+        setTeam(team);
+        resetForm();
+      });
+    }
   };
 
   return (
@@ -42,12 +78,41 @@ export default function NewPlayerForm({ user, player, setPlayer }) {
           <input
             name="name"
             id="name"
-            value={formInput.name}
+            htmlFor="name"
+            value={formInput.name || ''}
             onChange={handleChange}
-            placeholder="Player Name"
+            placeholder="Players Name"
             required
           />
+          <input
+            name="imageUrl"
+            id="imageUrl"
+            htmlFor="imageUrl"
+            value={formInput.imageUrl || ''}
+            onChange={handleChange}
+            placeholder="Players Image"
+          />
+          <input
+            name="position"
+            id="position"
+            htmlFor="position"
+            value={formInput.position || ''}
+            onChange={handleChange}
+            placeholder="Players Position"
+          />
+          {/* <input
+            name="playerNumber"
+            id="playerNumber"
+            type="number"
+            htmlFor="playerNumber"
+            value={formInput.playerNumber || ''}
+            onChange={handleNumberChange}
+            placeholder="Players Number"
+          /> */}
         </label>
+        <button type="submit" className="btn btn-success">
+          {player.firebaseKey ? 'Update' : 'Submit'}
+        </button>
       </form>
     </>
   );
@@ -59,8 +124,15 @@ NewPlayerForm.propTypes = {
     firebaseKey: PropTypes.string,
     imageUrl: PropTypes.string,
     position: PropTypes.string,
+    playerNumber: PropTypes.number,
+    uid: PropTypes.string,
+  }),
+  user: PropTypes.shape({
+    name: PropTypes.string,
     uid: PropTypes.string,
   }).isRequired,
-  user: PropTypes.shape({}).isRequired,
   setPlayer: PropTypes.func.isRequired,
+  setTeam: PropTypes.func.isRequired,
 };
+
+NewPlayerForm.defaultProps = { player: {} };

@@ -5,7 +5,7 @@ import Team from '../views/Team';
 import NewPlayer from '../views/NewPlayer';
 
 export default function Routes({
-  player, setPlayer, team, setTeam,
+  user, player, team, setPlayer, setTeam,
 }) {
   return (
     <div>
@@ -18,7 +18,14 @@ export default function Routes({
         <Route
           exact
           path="/player"
-          component={() => <NewPlayer player={player} setPlayer={setPlayer} />}
+          component={() => (
+            <NewPlayer
+              user={user}
+              player={player}
+              setPlayer={setPlayer}
+              setTeam={setTeam}
+            />
+          )}
         />
       </Switch>
     </div>
@@ -26,14 +33,18 @@ export default function Routes({
 }
 
 Routes.propTypes = {
+  team: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setPlayer: PropTypes.func.isRequired,
+  setTeam: PropTypes.func.isRequired,
   player: PropTypes.shape({
+    id: PropTypes.string,
     name: PropTypes.string,
-    firebaseKey: PropTypes.string,
     imageUrl: PropTypes.string,
     position: PropTypes.string,
     uid: PropTypes.string,
   }).isRequired,
-  team: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setPlayer: PropTypes.func.isRequired,
-  setTeam: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string,
+    uid: PropTypes.string,
+  }).isRequired,
 };
