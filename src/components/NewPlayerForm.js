@@ -7,17 +7,15 @@ const initialState = {
   playerNumber: 0,
   imageUrl: '',
   position: '',
-  uid: '',
 };
 
 export default function NewPlayerForm({
-  user,
-  player,
-  setPlayer,
-  setTeam,
-  editPlayer,
+  user, player, setPlayer, setTeam,
 }) {
-  const [formInput, setFormInput] = useState(initialState);
+  const [formInput, setFormInput] = useState({
+    ...initialState,
+    uid: user.uid,
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,14 +36,14 @@ export default function NewPlayerForm({
   useEffect(() => {
     let isMounted = true;
     const userObj = user;
-    if (editPlayer.firebaseKey) {
+    if (player.firebaseKey) {
       if (isMounted) {
         setFormInput({
-          name: editPlayer.name,
-          firebaseKey: editPlayer.firebaseKey,
-          imageUrl: editPlayer.imageUrl,
-          position: editPlayer.position,
-          playerNumber: editPlayer.playerNumber,
+          name: player.name,
+          firebaseKey: player.firebaseKey,
+          imageUrl: player.imageUrl,
+          position: player.position,
+          playerNumber: player.playerNumber,
           uid: userObj.uid,
         });
       }
@@ -64,6 +62,7 @@ export default function NewPlayerForm({
     e.preventDefault();
     if (player.firebaseKey) {
       updatePlayer(formInput).then((team) => {
+        console.warn(team);
         setTeam(team);
         resetForm();
       });
@@ -131,14 +130,6 @@ NewPlayerForm.propTypes = {
     playerNumber: PropTypes.number,
     uid: PropTypes.string,
   }),
-  editPlayer: PropTypes.shape({
-    name: PropTypes.string,
-    firebaseKey: PropTypes.string,
-    imageUrl: PropTypes.string,
-    position: PropTypes.string,
-    playerNumber: PropTypes.number,
-    uid: PropTypes.string,
-  }).isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
     uid: PropTypes.string,

@@ -10,6 +10,13 @@ const getAllPlayers = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getSinglePlayer = (firebaseKey) => new Promise((resolve, reject) => {
+  axios
+    .get(`${dbUrl}/players/${firebaseKey}.json`)
+    .then((response) => resolve(response.data))
+    .catch(reject);
+});
+
 const createPlayer = (obj) => new Promise((resolve, reject) => {
   axios
     .post(`${dbUrl}/players.json`, obj)
@@ -41,5 +48,9 @@ const deletePlayer = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 export {
-  getAllPlayers, createPlayer, updatePlayer, deletePlayer,
+  getAllPlayers,
+  createPlayer,
+  updatePlayer,
+  deletePlayer,
+  getSinglePlayer,
 };

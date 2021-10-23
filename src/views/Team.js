@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Players from '../components/Players';
 
-export default function Team({ team, setTeam, setPlayer }) {
+export default function Team({
+  team, setTeam, setPlayer, user,
+}) {
   return (
     <>
       <h1>Creased Lightning</h1>
@@ -11,6 +13,7 @@ export default function Team({ team, setTeam, setPlayer }) {
           team.map((player) => (
             <Players
               key={player.firebaseKey}
+              user={user}
               player={player}
               setTeam={setTeam}
               setPlayer={setPlayer}
@@ -28,4 +31,8 @@ Team.propTypes = {
   team: PropTypes.arrayOf(PropTypes.object).isRequired,
   setTeam: PropTypes.func.isRequired,
   setPlayer: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string,
+    uid: PropTypes.string,
+  }).isRequired,
 };

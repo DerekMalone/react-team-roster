@@ -2,16 +2,10 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Team from '../views/Team';
-import NewPlayer from '../views/NewPlayer';
+import NewPlayerForm from '../components/NewPlayerForm';
 
 export default function Routes({
-  user,
-  player,
-  team,
-  setPlayer,
-  setTeam,
-  editPlayer,
-  setEditPlayer,
+  user, player, team, setPlayer, setTeam,
 }) {
   return (
     <div>
@@ -24,7 +18,7 @@ export default function Routes({
               team={team}
               setTeam={setTeam}
               setPlayer={setPlayer}
-              setEditPlayer={setEditPlayer}
+              user={user}
             />
           )}
         />
@@ -32,12 +26,11 @@ export default function Routes({
           exact
           path="/player"
           component={() => (
-            <NewPlayer
+            <NewPlayerForm
               user={user}
               player={player}
               setPlayer={setPlayer}
               setTeam={setTeam}
-              editPlayer={editPlayer}
             />
           )}
         />
@@ -50,14 +43,6 @@ Routes.propTypes = {
   team: PropTypes.arrayOf(PropTypes.object).isRequired,
   setPlayer: PropTypes.func.isRequired,
   setTeam: PropTypes.func.isRequired,
-  setEditPlayer: PropTypes.func.isRequired,
-  editPlayer: PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-    imageUrl: PropTypes.string,
-    position: PropTypes.string,
-    uid: PropTypes.string,
-  }).isRequired,
   player: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
