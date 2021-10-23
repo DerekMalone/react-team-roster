@@ -5,7 +5,13 @@ import Team from '../views/Team';
 import NewPlayer from '../views/NewPlayer';
 
 export default function Routes({
-  user, player, team, setPlayer, setTeam,
+  user,
+  player,
+  team,
+  setPlayer,
+  setTeam,
+  editPlayer,
+  setEditPlayer,
 }) {
   return (
     <div>
@@ -14,7 +20,12 @@ export default function Routes({
           exact
           path="/"
           component={() => (
-            <Team team={team} setTeam={setTeam} setPlayer={setPlayer} />
+            <Team
+              team={team}
+              setTeam={setTeam}
+              setPlayer={setPlayer}
+              setEditPlayer={setEditPlayer}
+            />
           )}
         />
         <Route
@@ -26,6 +37,7 @@ export default function Routes({
               player={player}
               setPlayer={setPlayer}
               setTeam={setTeam}
+              editPlayer={editPlayer}
             />
           )}
         />
@@ -38,6 +50,14 @@ Routes.propTypes = {
   team: PropTypes.arrayOf(PropTypes.object).isRequired,
   setPlayer: PropTypes.func.isRequired,
   setTeam: PropTypes.func.isRequired,
+  setEditPlayer: PropTypes.func.isRequired,
+  editPlayer: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    imageUrl: PropTypes.string,
+    position: PropTypes.string,
+    uid: PropTypes.string,
+  }).isRequired,
   player: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,

@@ -10,6 +10,7 @@ import { getAllPlayers } from '../api/data/teamData';
 function Initialize() {
   const [team, setTeam] = useState([]);
   const [player, setPlayer] = useState({});
+  const [editPlayer, setEditPlayer] = useState({});
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -40,6 +41,8 @@ function Initialize() {
               team={team}
               setPlayer={setPlayer}
               setTeam={setTeam}
+              setEditPlayer={setEditPlayer}
+              editPlayer={editPlayer}
             />
           </>
         ) : (

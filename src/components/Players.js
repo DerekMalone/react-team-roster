@@ -1,10 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import { deletePlayer } from '../api/data/teamData';
 
-export default function Players({ player, setTeam }) {
+export default function Players({ player, setTeam, setEditPlayer }) {
+  const history = useHistory();
+
   const handleClick = () => {
     deletePlayer(player.firebaseKey).then(setTeam);
+  };
+
+  const setPlayerEdit = (obj) => {
+    setEditPlayer(obj);
+    history.push('/player');
   };
 
   return (
@@ -15,7 +23,7 @@ export default function Players({ player, setTeam }) {
       <h4>{player.position}</h4>
       <div>
         <button
-          onClick={() => handleClick(player)} //  **NEED TO TRY AND USE HISTORY TO ROUTE TO NEWPLAYER?**
+          onClick={setPlayerEdit(player)}
           type="button"
           className="btn btn-info"
         >
@@ -43,4 +51,7 @@ Players.propTypes = {
     uid: PropTypes.string,
   }).isRequired,
   setTeam: PropTypes.func.isRequired,
+  setEditPlayer: PropTypes.func,
 };
+
+Players.defaultProps = { setEditPlayer: {} };
