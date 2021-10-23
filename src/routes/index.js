@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Team from '../views/Team';
-import NewPlayer from '../views/NewPlayer';
+import NewPlayerForm from '../components/NewPlayerForm';
 
 export default function Routes({
   user, player, team, setPlayer, setTeam,
@@ -14,14 +14,19 @@ export default function Routes({
           exact
           path="/"
           component={() => (
-            <Team team={team} setTeam={setTeam} setPlayer={setPlayer} />
+            <Team
+              team={team}
+              setTeam={setTeam}
+              setPlayer={setPlayer}
+              user={user}
+            />
           )}
         />
         <Route
           exact
           path="/player"
           component={() => (
-            <NewPlayer
+            <NewPlayerForm
               user={user}
               player={player}
               setPlayer={setPlayer}

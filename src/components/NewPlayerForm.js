@@ -7,13 +7,15 @@ const initialState = {
   playerNumber: 0,
   imageUrl: '',
   position: '',
-  uid: '',
 };
 
 export default function NewPlayerForm({
   user, player, setPlayer, setTeam,
 }) {
-  const [formInput, setFormInput] = useState(initialState);
+  const [formInput, setFormInput] = useState({
+    ...initialState,
+    uid: user.uid,
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,6 +62,7 @@ export default function NewPlayerForm({
     e.preventDefault();
     if (player.firebaseKey) {
       updatePlayer(formInput).then((team) => {
+        console.warn(team);
         setTeam(team);
         resetForm();
       });
