@@ -13,7 +13,9 @@ export default function Routes({
         <Route
           exact
           path="/"
-          component={() => <Team team={team} setTeam={setTeam} />}
+          component={() => (
+            <Team team={team} setTeam={setTeam} setPlayer={setPlayer} />
+          )}
         />
         <Route
           exact

@@ -33,4 +33,13 @@ const updatePlayer = (playerObj) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export { getAllPlayers, createPlayer, updatePlayer };
+const deletePlayer = (firebaseKey) => new Promise((resolve, reject) => {
+  axios
+    .delete(`${dbUrl}/players/${firebaseKey}.json`)
+    .then(() => getAllPlayers().then(resolve))
+    .catch(reject);
+});
+
+export {
+  getAllPlayers, createPlayer, updatePlayer, deletePlayer,
+};
