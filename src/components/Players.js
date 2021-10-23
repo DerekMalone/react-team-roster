@@ -17,6 +17,7 @@ export default function Players({ player, setTeam, setEditPlayer }) {
 
   return (
     <>
+      {/* Need to attempt to put the NewPlayerForm here on button click and use a new Promise to get sinlge player then call the form. */}
       <i>{player.imageUrl}</i>
       <h3>{player.name}</h3>
       <hr />
