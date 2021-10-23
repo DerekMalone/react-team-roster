@@ -33,7 +33,7 @@ export default function NewPlayerForm({
 
   useEffect(() => {
     let isMounted = true;
-
+    const userObj = user;
     if (player.firebaseKey) {
       if (isMounted) {
         setFormInput({
@@ -42,7 +42,7 @@ export default function NewPlayerForm({
           imageUrl: player.imageUrl,
           position: player.position,
           playerNumber: player.playerNumber,
-          uid: user.uid,
+          uid: userObj.uid,
         });
       }
     }
